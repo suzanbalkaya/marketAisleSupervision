@@ -2,6 +2,7 @@ package marketAisleSupervision.user.controllers;
 
 
 import marketAisleSupervision.user.models.Entity.Task;
+import marketAisleSupervision.user.response.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
@@ -33,15 +34,15 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ResponseEntity<User> loginUser(@RequestParam String userEmailOrUserName, @RequestParam String password){
+    public ResponseEntity<LoginResponse> loginUser(@RequestParam String userEmailOrUserName, @RequestParam String password){
         try{
-            return new ResponseEntity<User>(userService.login(userEmailOrUserName,password),HttpStatus.OK);
+            return new ResponseEntity<LoginResponse>(userService.login(userEmailOrUserName,password),HttpStatus.OK);
         }catch (Exception ex){
-            return  new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+            return  new ResponseEntity<LoginResponse>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+   /* @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ResponseEntity<User> create(@RequestBody User user) {
         try {
             userService.save(user);
@@ -50,7 +51,7 @@ public class UserController {
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
 
-    }
+    }*/
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public ResponseEntity<User> update(@RequestBody User user) {

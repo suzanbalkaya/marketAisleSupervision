@@ -2,6 +2,7 @@ package marketAisleSupervision.user.service.impl;
 
 
 import marketAisleSupervision.user.models.Entity.Task;
+import marketAisleSupervision.user.response.LoginResponse;
 import marketAisleSupervision.user.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,21 +24,29 @@ public class UserServiceImpl implements UserService {
     @Autowired
     TaskService taskService;
     @Override
-    public User login(String userEmailOrUserName, String password) {
+    public LoginResponse login(String userEmailOrUserName, String password) {
         password = encipheringMD5(password);
+        LoginResponse loginResponse = new LoginResponse();
         if (userEmailOrUserName.isEmpty() || password.isEmpty()) {
             System.out.println("kullanıcı adı ve şifre boş olamaz");
             return null;
         } else if (isEmailValid(userEmailOrUserName)) {
             List<User> users=userDao.loginEmail(userEmailOrUserName, password);
-            if(users.size()<2)
-                return users.get(0);
+            if(users.size()<2) {
+                loginResponse.setUser(users.get(0));
+                loginResponse.setTaskList(taskService.userTaskList(loginResponse.getUser().getId()));
+                return  loginResponse;
+            }
             else
                 return null;
         } else {
             List<User> users=userDao.loginUserName(userEmailOrUserName, password);
-            if(users.size()<2)
-                return users.get(0);
+            if(users.size()<2){
+                loginResponse.setUser( users.get(0));
+                loginResponse.setTaskList(taskService.userTaskList(loginResponse.getUser().getId()));
+
+                return loginResponse;
+            }
             else
                 return null;
         }

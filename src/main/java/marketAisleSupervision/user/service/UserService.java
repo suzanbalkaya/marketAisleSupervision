@@ -2,13 +2,14 @@ package marketAisleSupervision.user.service;
 
 import marketAisleSupervision.user.models.Entity.Task;
 import marketAisleSupervision.user.models.Entity.User;
+import marketAisleSupervision.user.response.LoginResponse;
 
 import java.io.Serializable;
 import java.util.List;
 
 
 public interface UserService {
-    public  User login(String userEmailOrUserName,String password);
+    public LoginResponse login(String userEmailOrUserName, String password);
 
     public void save(User userEntity) ;
 

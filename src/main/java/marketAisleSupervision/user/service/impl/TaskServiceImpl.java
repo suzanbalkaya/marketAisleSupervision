@@ -33,8 +33,8 @@ import java.util.List;
     }
 
     @Override
-    public List<Task> userListTask(Integer userId) {
-        return taskDao.userListTask(userId);
+    public List<Task> userTaskList(Integer userId) {
+        return taskDao.userTaskList(userId);
     }
 
     @Override
@@ -164,6 +164,11 @@ import java.util.List;
     public List<Task> getTaskHistory(Integer userId) {
 
         return taskDao.getTaskHistory(userId);
+    }
+
+    @Override
+    public List<Task> getInsertedTaskList() {
+        return taskDao.getInsertedTaskList();
     }
 
 

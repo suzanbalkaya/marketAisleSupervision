@@ -18,7 +18,8 @@ public class TaskDaoImpl implements TaskDao {
     @Autowired
     private SessionFactory _sessionFactory;
 
-    private Session getSession() {
+    private Session getSession()
+    {
         return _sessionFactory.getCurrentSession();
     }
 
@@ -36,7 +37,7 @@ public class TaskDaoImpl implements TaskDao {
     }
 
     @Override
-    public List<Task> userListTask(Integer userId) {
+    public List<Task> userTaskList(Integer userId) {
         Query query = getSession().createQuery("from Task t where t.userId =:userId");
         query.setParameter("userId",userId);
         return query.list();
@@ -60,5 +61,11 @@ public class TaskDaoImpl implements TaskDao {
         query.setParameter("userId",userId);
         return  query.list();
 
+    }
+
+    @Override
+    public List<Task> getInsertedTaskList() {
+        Query query= getSession().createQuery("from Task t where t.status =1 ");
+        return query.list();
     }
 }
